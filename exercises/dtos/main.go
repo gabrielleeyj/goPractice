@@ -29,12 +29,14 @@ type AddProductInput struct {
 // AddProductOutput is the output DTO of the AddProduct function.
 type AddProductOutput []Product
 
+// Product Structure contains abstraction of the product information.
 type Product struct {
 	Name     string
 	Price    float64
 	Discount float64
 }
 
+// AddProduct function takes the input AddProductInput which is the DTO of the AddProduct function.
 func AddProduct(input AddProductInput) []Product {
 	var out []Product
 
