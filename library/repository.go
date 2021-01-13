@@ -1,6 +1,10 @@
 package main
 
-import "gorm.io/gorm"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 // Repository interface is the implementation of the Repository functions.
 type Repository interface {
@@ -17,21 +21,21 @@ type BookRespository struct {
 }
 
 func (r *BookRespository) Get(isbn string) (*Book, error) {
-
+	return nil, errors.New("book not found")
 }
 
 func (r *BookRespository) GetAll(isbn string) (*Book, error) {
-
+	return nil, errors.New("book not found")
 }
 
 func (r *BookRespository) Create(isbn string, name string) (*Book, error) {
-
+	return nil, errors.New("book exists")
 }
 
 func (r *BookRespository) Update(isbn string, name string) (*Book, error) {
-
+	return nil, errors.New("book cannot be updated")
 }
 
 func (r *BookRespository) Delete(isbn string) (*Book, error) {
-
+	return nil, errors.New("book not found")
 }
