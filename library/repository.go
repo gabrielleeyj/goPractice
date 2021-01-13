@@ -62,11 +62,25 @@ func (m *MemoryRepository) GetAll(isbn string) (*Books, error) {
 	return nil, errors.New("book not found")
 }
 
+// Create allows the creation of a new book into memory.
 func (m *MemoryRepository) Create(isbn string, name string) (*Books, error) {
-	return nil, errors.New("book exists")
+	for _, v := range m.b {
+		if v.ISBN == isbn {
+			return nil, errors.New("book exists")
+		}
+	}
+	book := Books{Name: name, ISBN: isbn, Status: "Available"}
+	return &book, nil
 }
 
+// Update allows the updating of book name in the memory database.
 func (m *MemoryRepository) Update(isbn string, name string) (*Books, error) {
+	for _, v := range m.b {
+		if v.ISBN == isbn {
+			book := Books{Name: name}
+			return &book, nil
+		}
+	}
 	return nil, errors.New("book cannot be updated")
 }
 
