@@ -55,7 +55,7 @@ func (m *MemoryRepository) Get(isbn string) (*Books, error) {
 }
 
 func (m *MemoryRepository) GetAll(isbn string) (*Books, error) {
-	for i, v := range m.b {
+	for _, v := range m.b {
 		book := Books{ISBN: v.ISBN, Name: v.Name, Status: v.Status}
 		return &book, nil
 	}
