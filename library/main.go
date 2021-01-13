@@ -12,13 +12,13 @@ func main() {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&Book{})
+	db.AutoMigrate(&Books{})
 
-	// Create
-	db.Create(&Book{})
+	// Create book table
+	db.Create(&Books{})
 
-	// Read
-	var book Book
+	// Read book entry
+	var book Books
 	db.First(&book, 1)                 // find product with integer primary key
 	db.First(&book, "code = ?", "D42") // find product with code D42
 
@@ -26,7 +26,7 @@ func main() {
 	db.Model(&book).Update("Status", "Reserved")
 
 	// Update - update multiple fields
-	db.Model(&book).Updates(Book{}) // non-zero fields
+	db.Model(&book).Updates(Books{}) // non-zero fields
 	db.Model(&book).Updates(map[string]interface{}{"Status": "Available"})
 
 	// Delete - delete product
