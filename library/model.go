@@ -2,8 +2,8 @@ package main
 
 import "gorm.io/gorm"
 
-// Book is the model to store the books information
-type Book struct {
+// Books is the model to store the books information
+type Books struct {
 	gorm.Model
 	Name   string `json:"name"`
 	ISBN   string `json:"isbn"`
