@@ -16,12 +16,12 @@ func slice() {
 	var s []int
 	fmt.Println("Empty Slice", s)
 	// append 5 values to slice
-	s = append(s, 1,2,3,4,5)
+	s = append(s, 1, 2, 3, 4, 5)
 	fmt.Println("Append to empty slice", s)
 	fmt.Println("Capacity of Slice: ", len(s))
 
 	// append another 4 values to slice
-	s = append(s, 6,7,8,9)
+	s = append(s, 6, 7, 8, 9)
 	fmt.Println("Append to existing slice", s)
 	// capacity of slice increases according to append
 	fmt.Println("Capacity of Slice:", len(s))
@@ -31,14 +31,14 @@ func slice() {
 	fmt.Println("Make Slice", slice2)
 	// if slice copy, is slice2[:5], returns slice bounds out of range with capacity 0
 	slice3 := slice2[0:]
-	fmt.Println("Copy Slice",slice3)
+	fmt.Println("Copy Slice", slice3)
 
 	board := [][]string{
-		[]string{"_","_","_"},
-		[]string{"_","_","_"},
-		[]string{"_","_","_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
 	}
-	fmt.Println("Length of Board",len(board))
+	fmt.Println("Length of Board", len(board))
 	fmt.Println("Tic Tac Toe Board")
 
 	for i := 0; i < len(board); i++ {
