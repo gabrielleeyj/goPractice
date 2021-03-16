@@ -2,11 +2,12 @@ package db
 
 import (
 	"fmt"
+	"library.com/library/models"
 	"testing"
 )
 
 func TestRepository(t *testing.T) {
-	books := make([]Book, 0)
+	books := make([]models.Book, 0)
 	repo := NewMemoryRepository(books)
 
 	fmt.Println(repo)
@@ -14,12 +15,12 @@ func TestRepository(t *testing.T) {
 
 func TestCreate(t *testing.T) {
 	// initialize the memory repository
-	books := make([]Book, 0)
+	books := make([]models.Book, 0)
 	repo := NewMemoryRepository(books)
 
 	fmt.Println(repo)
 
-	book := Book{Name: "TestBook", ISBN: "1234567890"}
+	book := models.Book{Name: "TestBook", ISBN: "1234567890"}
 	// create function
 	r, err := repo.Create(book)
 	if err != nil {
@@ -30,12 +31,12 @@ func TestCreate(t *testing.T) {
 
 func TestGetAll(t *testing.T) {
 	// initialize the memory repository
-	books := make([]Book, 0)
+	books := make([]models.Book, 0)
 	repo := NewMemoryRepository(books)
 
 	fmt.Println("T001: ", repo)
 
-	book := Book{Name: "TestBook", ISBN: "1234567890"}
+	book := models.Book{Name: "TestBook", ISBN: "1234567890"}
 	// create function
 	r, err := repo.Create(book)
 	if err != nil {
@@ -43,9 +44,10 @@ func TestGetAll(t *testing.T) {
 	}
 	fmt.Println("T002: ", r)
 
-	// getall function
-	err = repo.GetAll()
+	// GetAll function
+	books, err = repo.GetAll()
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(books)
 }

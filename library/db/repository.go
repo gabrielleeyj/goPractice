@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"fmt"
 	"gorm.io/gorm"
 	"library.com/library/models"
 )
@@ -69,81 +70,80 @@ func (r *BookRepository) Delete(id uint) error {
 	return nil
 }
 
-//
-///*													*/
-///* 													*/
-///*			MEMORY REPOSITORY CODE BLOCK			*/
-///*													*/
-///*													*/
-//
-//// MemoryRepository is the implementation of data storage in memory.
-//type MemoryRepository struct {
-//	b []models.Book
-//}
-//
-//// NewMemoryRepository stores an array of books
-//func NewMemoryRepository(initial []models.Book) Repository {
-//	return &MemoryRepository{
-//		b: initial,
-//	}
-//}
-//
-//// Get searches for a single book in memory
-//func (m *MemoryRepository) Get(isbn string) (*Book, error) {
-//	for _, v := range m.b {
-//		if v.ISBN == isbn {
-//			return &Book{Name: v.Name}, nil
-//		}
-//	}
-//	return nil, errors.New("book not found")
-//}
-//
-//// GetAll gets all the books in memory
-//func (m *MemoryRepository) GetAll() error {
-//	if m.b == nil {
-//		return errors.New("book not found")
-//	}
-//	for _, v := range m.b {
-//		fmt.Println("Name: ", v.Name)
-//		fmt.Println("ISBN: ", v.ISBN)
-//		fmt.Println("Status: ", v.Status)
-//	}
-//	return nil
-//}
-//
-//// Create allows the creation of a new book into memory.
-//func (m *MemoryRepository) Create(book Book) (*Book, error) {
-//	// checking function
-//	for _, v := range m.b {
-//		if v.ISBN == book.ISBN {
-//			return nil, errors.New("book exists")
-//		}
-//	}
-//	if ValidateISBN(book.ISBN) != false {
-//		m.b = append(m.b, book)
-//	}
-//	return &book, nil
-//}
-//
-//// Update allows the updating of book name in the memory database.
-//func (m *MemoryRepository) Update(book Book) (*models.Book, error) {
-//	for _, v := range m.b {
-//		if v.ISBN == book.ISBN {
-//			book := models.Book{Name: book.Name}
-//			return &book, nil
-//		}
-//	}
-//	return nil, errors.New("book cannot be updated")
-//}
-//
-//// Delete checks whether isbn exist and deletes
-//func (m *MemoryRepository) Delete(isbn string) error {
-//	temp := make([]Book, 0)
-//	for _, v := range m.b {
-//		if v.ISBN != isbn {
-//			temp = append(temp, v)
-//		}
-//	}
-//
-//	return errors.New("book does not exist")
-//}
+/*													*/
+/* 													*/
+/*			MEMORY REPOSITORY CODE BLOCK			*/
+/*													*/
+/*													*/
+
+// MemoryRepository is the implementation of data storage in memory.
+type MemoryRepository struct {
+	b []models.Book
+}
+
+// NewMemoryRepository stores an array of books
+func NewMemoryRepository(b []models.Book) Repository {
+	return &MemoryRepository{
+		b: b,
+	}
+}
+
+// Get searches for a single book in memory
+func (m *MemoryRepository) Get(isbn string) (*models.Book, error) {
+	for _, v := range m.b {
+		if v.ISBN == isbn {
+			return &models.Book{Name: v.Name}, nil
+		}
+	}
+	return nil, errors.New("book not found")
+}
+
+// GetAll gets all the books in memory
+func (m *MemoryRepository) GetAll() ([]models.Book, error) {
+	if m.b == nil {
+		return nil, errors.New("book not found")
+	}
+	for _, v := range m.b {
+		fmt.Println("Name: ", v.Name)
+		fmt.Println("ISBN: ", v.ISBN)
+		fmt.Println("Status: ", v.Status)
+	}
+	return m.b, nil
+}
+
+// Create allows the creation of a new book into memory.
+func (m *MemoryRepository) Create(book models.Book) (*models.Book, error) {
+	// checking function
+	for _, v := range m.b {
+		if v.ISBN == book.ISBN {
+			return nil, errors.New("book exists")
+		}
+	}
+	//if ValidateISBN(book.ISBN) != false {
+	m.b = append(m.b, book)
+	//}
+	return &book, nil
+}
+
+// Update allows the updating of book name in the memory database.
+func (m *MemoryRepository) Update(id uint, book models.Book) (*models.Book, error) {
+	for _, v := range m.b {
+		if v.ISBN == book.ISBN {
+			book := models.Book{Name: book.Name}
+			return &book, nil
+		}
+	}
+	return nil, errors.New("book cannot be updated")
+}
+
+// Delete checks whether isbn exist and deletes
+func (m *MemoryRepository) Delete(id uint) error {
+	temp := make([]models.Book, 0)
+	for _, v := range m.b {
+		if v.ID != id {
+			temp = append(temp, v)
+		}
+	}
+
+	return errors.New("book does not exist")
+}
