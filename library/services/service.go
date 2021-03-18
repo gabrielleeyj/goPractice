@@ -2,8 +2,8 @@ package services
 
 import (
 	"fmt"
-	"library.com/library/db"
 	"library.com/library/models"
+	"library.com/library/repository"
 )
 
 // Service interface is responsible for managing the various services that will be used.
@@ -15,7 +15,7 @@ type Service interface {
 
 // BookService is a use case implementation of the basic Library functions
 type BookService struct {
-	repository db.Repository
+	repository repository.Repository
 }
 
 // ValidateISBN returns true if the provided string is a valid ISBN-10 or ISBN-13.
@@ -140,7 +140,7 @@ func (s *BookService) Return(isbn string) (*models.Book, error) {
 	return book, nil
 }
 
-func NewBookService(repository db.Repository) Service {
+func NewBookService(repository repository.Repository) Service {
 	return &BookService{
 		repository: repository,
 	}

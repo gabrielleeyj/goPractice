@@ -1,9 +1,14 @@
 package main
 
 import (
+	"github.com/go-chi/chi/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"library.com/library/controllers"
 	"library.com/library/models"
+	"library.com/library/repository"
+	"library.com/library/services"
+	"net/http"
 )
 
 func main() {
@@ -13,23 +18,37 @@ func main() {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&models.Book{})
-
+	err = db.AutoMigrate(&models.Book{})
+	if err != nil {
+		panic("Fail to automigrate")
+	}
 	// Create book table
-	db.Create(&models.Book{Name: "The Lord of The Rings", ISBN: "9780544003415", Status: models.Available})
+	//repository.Create(&models.Book{Name: "The Lord of The Rings", ISBN: "9780544003415", Status: models.Available})
+
+	r := repository.NewRepository(db)
+	s := services.NewBookService(r)
+	c := controllers.NewController(s)
+
+	router := chi.NewRouter()
+	router.Get("/", c.List)
+
+	err = http.ListenAndServe(":8080", router)
+	if err != nil {
+		panic("Server down")
+	}
 }
 
 // // Read book entry
 // var book Book
-// db.First(&book, 1)                 // find product with integer primary key
-// db.First(&book, "code = ?", "D42") // find product with code D42
+// repository.First(&book, 1)                 // find product with integer primary key
+// repository.First(&book, "code = ?", "D42") // find product with code D42
 
 // // Update - update book's status
-// db.Model(&book).Update("Status", "Reserved")
+// repository.Model(&book).Update("Status", "Reserved")
 
 // // Update - update multiple fields
-// db.Model(&book).Updates(Book{}) // non-zero fields
-// db.Model(&book).Updates(map[string]interface{}{"Status": "Available"})
+// repository.Model(&book).Updates(Book{}) // non-zero fields
+// repository.Model(&book).Updates(map[string]interface{}{"Status": "Available"})
 
 // // Delete - delete product
-// db.Delete(&book, 1)
+// repository.Delete(&book, 1)
