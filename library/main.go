@@ -32,6 +32,7 @@ func main() {
 	router := chi.NewRouter()
 	router.Get("/", c.List)
 	router.Put("/reserve/{isbn}", c.Reserve)
+	router.Put("/return/{isbn}", c.Return)
 
 	err = http.ListenAndServe(":8080", router)
 	if err != nil {
