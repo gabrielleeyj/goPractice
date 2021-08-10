@@ -114,27 +114,33 @@ func TestMoveBackAfterForward(t *testing.T) {
 func TestForbiddenPos(t *testing.T) {
 	b := NewBug([]int{14, 4, 18, 1, 15})
 	at := b.getCurrentPosition()
-	b.forward(14)
-	if at != b.getCurrentPosition() {
+	b.forward(1)
+	t.Logf("Moved forward: %d, current position: %d", 1, b.getCurrentPosition())
+	if at == b.getCurrentPosition() {
 		t.Fail()
 	}
-	b.forward(4)
-	if at != b.getCurrentPosition() {
+	b.forward(3)
+	t.Logf("Moved forward: %d, current position: %d", 3, b.getCurrentPosition())
+	if at == b.getCurrentPosition() {
+		t.Fail()
+	}
+	b.forward(10)
+	t.Logf("Moved forward: %d, current position: %d", 10, b.getCurrentPosition())
+	if at == b.getCurrentPosition() {
 		t.Fail()
 	}
 	b.forward(1)
-	if at != b.getCurrentPosition() {
+	t.Logf("Moved forward: %d, current position: %d", 1, b.getCurrentPosition())
+	if at == b.getCurrentPosition() {
 		t.Fail()
 	}
-	b.forward(15)
-	if at != b.getCurrentPosition() {
+	b.forward(3)
+	t.Logf("Moved forward: %d, current position: %d", 3, b.getCurrentPosition())
+	if at == b.getCurrentPosition() {
 		t.Fail()
 	}
-	b.forward(18)
-	if at != b.getCurrentPosition() {
-		t.Fail()
-	}
-	b.forward(2)
+	b.forward(3)
+	t.Logf("Moved forward: %d, current position: %d", 3, b.getCurrentPosition())
 	if at == b.getCurrentPosition() {
 		t.Fail()
 	}
