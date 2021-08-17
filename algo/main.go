@@ -1,4 +1,6 @@
-package algo
+package main
+
+import "fmt"
 
 //Question:
 //A certain bug's home is at position x. Help them get home from position 0 with minimum number of jumps.
@@ -32,14 +34,24 @@ package algo
 //Output: -1
 
 func main() {
-	// inputs
+	// inputs test 1
 	forbidden := []int{14, 4, 18, 1, 15} // blocked steps
 	a := 3                               // move forward
 	b := 15                              // move backwards
 	x := 9                               // destination
 
+	// inputs test 2
+	forbidden2 := []int{8, 3, 16, 6, 12, 20} // blocked steps
+	a2 := 3                                  // move forward
+	b2 := 15                                 // move backwards
+	x2 := 9                                  // destination
+
 	// start of code block
-	path(forbidden, a, b, x)
+	minStep := path(forbidden, a, b, x)
+	fmt.Println(minStep)
+
+	minStep2 := path(forbidden2, a2, b2, x2)
+	fmt.Println(minStep2)
 }
 
 func path(forbidden []int, a, b, x int) int {
